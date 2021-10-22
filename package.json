@@ -1,0 +1,20 @@
+{
+  "name": "slugify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "Abhishek Raj <abhi@raj.me>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.3",
+    "ts-node": "^10.3.1"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "slugify": "^1.6.1"
+  }
+}
