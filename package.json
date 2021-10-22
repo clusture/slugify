@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build-ts": "tsc"
   },
   "keywords": [],
   "author": "Abhishek Raj <abhi@raj.me>",
