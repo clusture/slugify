@@ -12,6 +12,8 @@ const getSlug = (txt: string) => {
   whiteList = whiteList.concat(conjs);
   whiteList = whiteList.concat(articles);
 
+  const whiteFirst = [...articles];
+
   const mapper: StringIndexable = {
     introduction: 'intro',
     algorithm: 'algo',
@@ -35,7 +37,13 @@ const getSlug = (txt: string) => {
   });
 
   let slugParts = slug.split('-');
-  slugParts = slugParts.filter(p => !whiteList.includes(p));
+
+  // Remove whiteList words, except when it's not a whiteFirst word at first place
+  // e.g. foo-on-bar ==> foo-bar
+  // e.g. on-foo-bar ==> on-foo-bar
+  // e.g. the-foo-bar ==> foo-bar
+  slugParts = slugParts.filter((p, i) => (!i && !whiteFirst.includes(p)) || !whiteList.includes(p));
+
   slugParts = slugParts.map(p => p.replaceAll('xyzhyphenxyz', '-'));
   slug = slugParts.join('-');
 

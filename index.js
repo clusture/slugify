@@ -1635,6 +1635,7 @@ var getSlug = (txt) => {
   let whiteList = others.concat(preps);
   whiteList = whiteList.concat(conjs);
   whiteList = whiteList.concat(articles);
+  const whiteFirst = [...articles];
   const mapper = {
     introduction: "intro",
     algorithm: "algo",
@@ -1655,7 +1656,7 @@ var getSlug = (txt) => {
     strict: true
   });
   let slugParts = slug.split("-");
-  slugParts = slugParts.filter((p) => !whiteList.includes(p));
+  slugParts = slugParts.filter((p, i) => !i && !whiteFirst.includes(p) || !whiteList.includes(p));
   slugParts = slugParts.map((p) => p.replaceAll("xyzhyphenxyz", "-"));
   slug = slugParts.join("-");
   slugParts = slug.split("-");
