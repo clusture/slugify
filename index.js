@@ -1627,6 +1627,7 @@ var import_chalk2 = __toModule(require_source());
 
 // src/common/get-slug.ts
 var import_slugify = __toModule(require_slugify());
+var HYPHEN = "xyzhyphenxyz";
 var getSlug = (txt) => {
   const preps = ["of", "with", "at", "from", "into", "to", "in", "for", "on", "by", "up"];
   const conjs = ["and", "so", "but", "or", "as", "if", "that"];
@@ -1648,7 +1649,7 @@ var getSlug = (txt) => {
     minimum: "min"
   };
   txt = txt.toLowerCase();
-  txt = txt.replaceAll("-", "xyzhyphenxyz");
+  txt = txt.replaceAll("-", HYPHEN);
   txt = txt.replaceAll("how to ", " ");
   txt = txt.replaceAll("'s ", " ");
   let slug = (0, import_slugify.default)(txt, {
@@ -1657,7 +1658,10 @@ var getSlug = (txt) => {
   });
   let slugParts = slug.split("-");
   slugParts = slugParts.filter((p, i) => !i && !whiteFirst.includes(p) || !whiteList.includes(p));
-  slugParts = slugParts.map((p) => p.replaceAll("xyzhyphenxyz", "-"));
+  slugParts = slugParts.map((p) => p.replaceAll(HYPHEN, "-"));
+  slugParts = slugParts.map((p) => p.startsWith("-") ? p.replaceAll("-", "") : p);
+  slugParts = slugParts.map((p) => p.endsWith("-") ? p.replaceAll("-", "") : p);
+  slugParts = slugParts.filter((p) => !!p);
   slug = slugParts.join("-");
   slugParts = slug.split("-");
   slugParts = slugParts.map((p) => {

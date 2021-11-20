@@ -2,6 +2,8 @@ import slugify from 'slugify';
 
 import { StringIndexable } from './common.model';
 
+const HYPHEN = 'xyzhyphenxyz';
+
 const getSlug = (txt: string) => {
   const preps = ['of', 'with', 'at', 'from', 'into', 'to', 'in', 'for', 'on', 'by', 'up'];
   const conjs = ['and', 'so', 'but', 'or', 'as', 'if', 'that'];
@@ -27,7 +29,7 @@ const getSlug = (txt: string) => {
   };
 
   txt = txt.toLowerCase();
-  txt = txt.replaceAll('-', 'xyzhyphenxyz');
+  txt = txt.replaceAll('-', HYPHEN);
   txt = txt.replaceAll('how to ', ' ');
   txt = txt.replaceAll("'s ", ' ');
 
@@ -44,7 +46,11 @@ const getSlug = (txt: string) => {
   // e.g. the-foo-bar ==> foo-bar
   slugParts = slugParts.filter((p, i) => (!i && !whiteFirst.includes(p)) || !whiteList.includes(p));
 
-  slugParts = slugParts.map(p => p.replaceAll('xyzhyphenxyz', '-'));
+  slugParts = slugParts.map(p => p.replaceAll(HYPHEN, '-'));
+  slugParts = slugParts.map(p => (p.startsWith('-') ? p.replaceAll('-', '') : p));
+  slugParts = slugParts.map(p => (p.endsWith('-') ? p.replaceAll('-', '') : p));
+  slugParts = slugParts.filter(p => !!p);
+
   slug = slugParts.join('-');
 
   slugParts = slug.split('-');
